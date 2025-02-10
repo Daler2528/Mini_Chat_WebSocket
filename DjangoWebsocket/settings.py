@@ -25,8 +25,10 @@ SECRET_KEY = 'django-insecure-czs9ltg3il(k+0_mys%e#)(l=uc6$)0kpkb-k$two$b()o$2gj
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*" , '192.168.68.105']
+# ALLOWED_HOSTS = ["*" , '192.168.68.105']
 
+
+ALLOWED_HOSTS = ["*","127.0.0.1", "192.168.1.100"]
 
 # Application definition
 
@@ -57,7 +59,10 @@ ASGI_APPLICATION = "DjangoWebsocket.asgi.application"
 # Channel Layers (oddiy In-memory variant)
 CHANNEL_LAYERS = {
     "default": {
-        "BACKEND": "channels.layers.InMemoryChannelLayer",
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("127.0.0.1", 6379)],
+        },
     },
 }
 

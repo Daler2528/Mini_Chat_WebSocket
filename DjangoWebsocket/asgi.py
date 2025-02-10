@@ -15,7 +15,7 @@ from apps.routing import websocket_urlpatterns
 
 
 
-application = get_asgi_application()
+# application = get_asgi_application()
 
 import os
 from django.core.asgi import get_asgi_application
@@ -24,17 +24,14 @@ from channels.routing import ProtocolTypeRouter, URLRouter
 import os
 from django.core.asgi import get_asgi_application
 from channels.routing import ProtocolTypeRouter, URLRouter
+
 from channels.auth import AuthMiddlewareStack
-from apps.routing import websocket_urlpatterns
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "DjangoWebsocket.settings")
 
-application = ProtocolTypeRouter(
-    {
-        "http": get_asgi_application(),  # Oddiy Django HTTP so‘rovlarini qabul qilish
-        "websocket": AuthMiddlewareStack(  # WebSocket ulanishlarini boshqarish
-            URLRouter(websocket_urlpatterns)
-        ),
-    }
-)
-
+application = ProtocolTypeRouter({
+    "http": get_asgi_application(),
+    "websocket": AuthMiddlewareStack(
+        URLRouter(websocket_urlpatterns)
+    ),
+})
